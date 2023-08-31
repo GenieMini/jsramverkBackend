@@ -1,6 +1,7 @@
 const database = require('../db/database.js');
 
 const tickets = {
+    // Get all tickets from db
     getTickets: async function getTickets(req, res){
         var db = await database.openDb();
 
@@ -13,6 +14,8 @@ const tickets = {
         });
     },
 
+    // Insert new ticket into db
+    // Return created ticket including assigned db id
     createTicket: async function createTicket(req, res){
         var db = await database.openDb();
 

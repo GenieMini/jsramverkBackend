@@ -1,6 +1,7 @@
 const database = require('../db/database.js');
 
 const trains = {
+    // Not sure if this is used for anything?
     fetchAllDelayedTrains: async function fetchAllDelayedTrains() {
         let db;
 

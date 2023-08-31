@@ -1,10 +1,15 @@
 const fetch = require('node-fetch')
 const EventSource = require('eventsource')
 
+/** 
+ * Create and update trainPositions object
+ * whenever updates are sent from the Trafikverket API server
+*/
 async function fetchTrainPositions(io) {
 
     process.env.TRAFIKVERKET_API_KEY = "016e6506181f4600bc1f9632f344b013";
 
+    // Get position of a single train in order to get SSEURL (for all trains)
     const query = `<REQUEST>
     <LOGIN authenticationkey="${process.env.TRAFIKVERKET_API_KEY}" />
     <QUERY sseurl="true" namespace="järnväg.trafikinfo" objecttype="TrainPosition" schemaversion="1.0" limit="1" />
@@ -20,8 +25,11 @@ async function fetchTrainPositions(io) {
         }
     )
     const result = await response.json()
+
+    // Get URL for SSE (Server-Sent Events)
     const sseurl = result.RESPONSE.RESULT[0].INFO.SSEURL
 
+    // Set up EventSource using SSEURL
     const eventSource = new EventSource(sseurl)
 
     eventSource.onopen = function() {
@@ -31,13 +39,15 @@ async function fetchTrainPositions(io) {
     io.on('connection', (socket) => {
         console.log('a user connected')
 
+        // Runs whenever new data is received from server (one train at a time?)
         eventSource.onmessage = function (e) {
             try {
+                // Turn data into JS object
                 const parsedData = JSON.parse(e.data);
 
+                // Create a new train object with the parsed data
                 if (parsedData) {
                     const changedPosition = parsedData.RESPONSE.RESULT[0].TrainPosition[0];
-
 
                     const matchCoords = /(\d*\.\d+|\d+),?/g
 
@@ -52,10 +62,13 @@ async function fetchTrainPositions(io) {
                         speed: changedPosition.Speed,
                     };
 
+                    // Check if train object already exists in trainPositions
                     if (trainPositions.hasOwnProperty(changedPosition.Train.AdvertisedTrainNumber)) {
+                        // Emit message to frontend for rendering
                         socket.emit("message", trainObject);
                     }
 
+                    // Create or overwrite trainObject in trainPositions
                     trainPositions[changedPosition.Train.AdvertisedTrainNumber] = trainObject;
                 }
             } catch (e) {

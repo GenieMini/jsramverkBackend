@@ -3,6 +3,7 @@ const database = require('../db/database.js');
 
 const codes = {
     getCodes: async function getCodes(req, res){
+        // Query API for reason codes and their descriptions
         const query = `<REQUEST>
                   <LOGIN authenticationkey="${process.env.TRAFIKVERKET_API_KEY}" />
                   <QUERY objecttype="ReasonCode" schemaversion="1">
@@ -12,7 +13,6 @@ const codes = {
                         <INCLUDE>Level3Description</INCLUDE>
                   </QUERY>
             </REQUEST>`;
-
 
             const response = fetch(
                 "https://api.trafikinfo.trafikverket.se/v2/data.json", {
