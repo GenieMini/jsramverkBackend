@@ -2,6 +2,9 @@ const fetch = require('node-fetch')
 
 const delayed = {
     getDelayedTrains: function getDelayedTrains(req, res) {
+        // Set up query to get train announcements (delays) meeting filter conditions
+        // Only "Avgang" with ETA "now"? 
+        // Only ATA between now -15 min and +2 hours?
         const query = `<REQUEST>
                   <LOGIN authenticationkey="${process.env.TRAFIKVERKET_API_KEY}" />
                   <QUERY objecttype="TrainAnnouncement" orderby='AdvertisedTimeAtLocation' schemaversion="1.8">
@@ -11,7 +14,7 @@ const delayed = {
                             <GT name="EstimatedTimeAtLocation" value="$now" />
                             <AND>
                                 <GT name='AdvertisedTimeAtLocation' value='$dateadd(-00:15:00)' />
-                                <LT name='AdvertisedTimeAtLocation'                   value='$dateadd(02:00:00)' />
+                                <LT name='AdvertisedTimeAtLocation' value='$dateadd(02:00:00)' />
                             </AND>
                         </AND>
                         </FILTER>
@@ -30,7 +33,6 @@ const delayed = {
                   </QUERY>
             </REQUEST>`;
 
-
             const response = fetch(
                 "https://api.trafikinfo.trafikverket.se/v2/data.json", {
                     method: "POST",
@@ -40,6 +42,7 @@ const delayed = {
             ).then(function(response) {
                 return response.json()
             }).then(function(result) {
+                // Return data as res.data
                 return res.json({
                     data: result.RESPONSE.RESULT[0].TrainAnnouncement
                 });
