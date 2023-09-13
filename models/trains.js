@@ -7,8 +7,6 @@ const EventSource = require('eventsource')
 */
 async function fetchTrainPositions(io) {
 
-    // process.env.TRAFIKVERKET_API_KEY = "016e6506181f4600bc1f9632f344b013";
-
     // Get position of a single train in order to get SSEURL (for all trains)
     const query = `<REQUEST>
     <LOGIN authenticationkey="${process.env.TRAFIKVERKET_API_KEY}" />
