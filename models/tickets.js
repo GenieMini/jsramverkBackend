@@ -5,9 +5,10 @@ const tickets = {
     getTickets: async function getTickets(req, res){
         var db = await database.openDb();
 
-        var allTickets = await db.all(`SELECT *, ROWID as id FROM tickets ORDER BY ROWID DESC`);
+        //var allTickets = await db.all(`SELECT *, ROWID as id FROM tickets ORDER BY ROWID DESC`);
+        const allTickets = await db.collection.find({}).toArray();
 
-        await db.close();
+        await db.client.close();
 
         return res.json({
             data: allTickets
@@ -19,18 +20,17 @@ const tickets = {
     createTicket: async function createTicket(req, res){
         var db = await database.openDb();
 
-        const result = await db.run(
-            'INSERT INTO tickets (code, trainnumber, traindate) VALUES (?, ?, ?)',
-            req.body.code,
-            req.body.trainnumber,
-            req.body.traindate,
-        );
+        const insertResult = await db.collection.insertOne({
+            "code": req.body.code,
+            "trainnumber": req.body.trainnumber,
+            "traindate": req.body.traindate
+        });
 
-        await db.close();
+        await db.client.close();
 
         return res.json({
             data: {
-                id: result.lastID,
+                id: insertResult.insertedId,
                 code: req.body.code,
                 trainnumber: req.body.trainnumber,
                 traindate: req.body.traindate,
