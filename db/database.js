@@ -1,6 +1,7 @@
-const url = "mongodb://127.0.0.1:27017";
+// Make connection to MongoDB Atlas
+const uri = `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@clusterjsramverk.dnumvzz.mongodb.net/?retryWrites=true&w=majority`;
 const { MongoClient } = require('mongodb');
-const client = new MongoClient(url);
+const client = new MongoClient(uri);
 
 const dbName = "trains";
 
