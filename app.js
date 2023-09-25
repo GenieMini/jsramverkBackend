@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // Set up Socket.IO for communication between front- and backend
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "http://localhost:9000",
+    origin: ['http://localhost:9000', 'https://www.student.bth.se/~shou21/editor/'],
     methods: ["GET", "POST"]
   }
 });
