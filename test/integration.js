@@ -30,7 +30,7 @@ describe('Basic Routes', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.an("object");
-
+                    console.log("HEJ")
                 });
             done();
         });
