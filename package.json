@@ -15,6 +15,7 @@
     "dotenv": "^16.0.3",
     "eventsource": "^2.0.2",
     "express": "^4.14.0",
+    "loader": "^2.1.1",
     "mongodb": "^6.0.0",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.1",
@@ -28,7 +29,7 @@
     "codecov": "^3.1.0",
     "coveralls": "^3.0.2",
     "javascript-style-guide": "^0.9.10",
-    "mocha": "^5.2.0",
-    "nyc": "^13.3.0"
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0"
   }
 }
