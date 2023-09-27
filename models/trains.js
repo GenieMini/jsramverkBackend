@@ -1,6 +1,10 @@
 const fetch = require('node-fetch')
 const EventSource = require('eventsource')
 
+async function getSseurl() {
+    
+}
+
 /** 
  * Create and update trainPositions object
  * whenever updates are sent from the Trafikverket API server
