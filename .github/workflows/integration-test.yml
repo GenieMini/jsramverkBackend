@@ -18,7 +18,6 @@ jobs:
             echo TRAFIKVERKET_API_KEY = '016e6506181f4600bc1f9632f344b013' >> .env
             echo ATLAS_USERNAME='admin' >> .env
             echo ATLAS_PASSWORD='AGwNJ6LBT47rjCzl' >> .env
-            cat .env
         env:
           CI: true
       - name: TypeScript check

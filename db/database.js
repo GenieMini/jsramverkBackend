@@ -1,7 +1,5 @@
 // Make connection to MongoDB Atlas
 const uri = `mongodb+srv://${process.env.ATLAS_USERNAME}:${process.env.ATLAS_PASSWORD}@clusterjsramverk.dnumvzz.mongodb.net/?retryWrites=true&w=majority`;
-console.log(process.env.ATLAS_USERNAME);
-console.log(process.env.ATLAS_PASSWORD);
 const { MongoClient } = require('mongodb');
 const client = new MongoClient(uri);
 
