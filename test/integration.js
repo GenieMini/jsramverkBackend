@@ -5,7 +5,7 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app.js');
-const fs = require('fs');
+//const fs = require('fs');
 
 chai.should();
 chai.use(chaiHttp);
@@ -30,9 +30,9 @@ describe('Basic Routes', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.an("object");
-                    console.log("HEJ")
+
+                    done();
                 });
-            done();
         });
     });
 
@@ -52,8 +52,8 @@ describe('Basic Routes', () => {
                     res.body.data.should.be.an("array");
                     res.body.data.length.should.be.above(0);
 
+                    done();
                 });
-            done();
         });
     });
 
@@ -67,9 +67,9 @@ describe('Basic Routes', () => {
                     res.body.should.be.an("object");
                     res.body.data.should.be.an("array");
                     res.body.data.length.should.be.above(0);
-                    
+
+                    done();
                 });
-            done();
         });
     });
 
@@ -83,8 +83,9 @@ describe('Basic Routes', () => {
                     res.body.should.be.an("object");
                     res.body.data.should.be.an("array");
                     res.body.data.length.should.be.above(0);
+
+                    done();
                 });
-            done();
         });
     });
 });

@@ -20,6 +20,6 @@ jobs:
         env:
           CI: true
       - name: TypeScript check
-        run: npm run test
+        run: npm run test2
         env:
           CI: true
