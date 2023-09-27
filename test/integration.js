@@ -74,7 +74,6 @@ describe('Basic Routes', () => {
     });
 
     // Tickets
-    /*
     describe('GET /tickets', () => {
         it('200 HAPPY PATH', (done) => {
             chai.request(server)
@@ -88,5 +87,5 @@ describe('Basic Routes', () => {
                     done();
                 });
         });
-    });*/
+    });
 });
