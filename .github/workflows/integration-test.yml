@@ -18,7 +18,7 @@ jobs:
               ATLAS_USERNAME='admin'\n
               ATLAS_PASSWORD='AGwNJ6LBT47rjCzl'" > .env
         env:
-            CI: true
+          CI: true
       - name: TypeScript check
         run: npm run test
         env:
