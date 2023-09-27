@@ -79,10 +79,15 @@ describe('Basic Routes', () => {
             chai.request(server)
                 .get("/tickets")
                 .end((err, res) => {
+                    console.log("1");
                     res.should.have.status(200);
+                    console.log("2");
                     res.body.should.be.an("object");
+                    console.log("3");
                     res.body.data.should.be.an("array");
+                    console.log("4");
                     res.body.data.length.should.be.above(0);
+                    console.log("5");
 
                     done();
                 });
