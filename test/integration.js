@@ -31,8 +31,8 @@ describe('Basic Routes', () => {
                     res.should.have.status(200);
                     res.body.should.be.an("object");
 
-                    done();
                 });
+            done();
         });
     });
 
@@ -52,8 +52,8 @@ describe('Basic Routes', () => {
                     res.body.data.should.be.an("array");
                     res.body.data.length.should.be.above(0);
 
-                    done();
                 });
+            done();
         });
     });
 
@@ -68,8 +68,8 @@ describe('Basic Routes', () => {
                     res.body.data.should.be.an("array");
                     res.body.data.length.should.be.above(0);
                     
-                    done();
                 });
+            done();
         });
     });
 
@@ -83,9 +83,8 @@ describe('Basic Routes', () => {
                     res.body.should.be.an("object");
                     res.body.data.should.be.an("array");
                     res.body.data.length.should.be.above(0);
-
-                    done();
                 });
+            done();
         });
     });
 });
