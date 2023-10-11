@@ -1,4 +1,6 @@
 const database = require('../db/database.js');
+let mongodb = require('mongodb');
+//let ObjectID = require('mongodb').ObjectID;
 
 const tickets = {
     // Get all tickets from db
@@ -34,6 +36,36 @@ const tickets = {
                 code: req.body.code,
                 trainnumber: req.body.trainnumber,
                 traindate: req.body.traindate,
+            }
+        });
+    },
+
+    // update a ticket
+    updateTicket: async function updateTicket(req, res){
+        var db = await database.openDb();
+
+        await db.collection.updateOne({ _id: new mongodb.ObjectId(req.body._id)}, { $set: { code: req.body.code } });
+
+        await db.client.close();
+
+        return res.json({
+            data: {
+                id: req.body._id
+            }
+        });
+    },
+
+    // delete a ticket
+    deleteTicket: async function deleteTicket(req, res){
+        var db = await database.openDb();
+
+        await db.collection.deleteOne({ _id: new mongodb.ObjectId(req.body._id)});
+
+        await db.client.close();
+
+        return res.json({
+            data: {
+                id: req.body._id
             }
         });
     }
