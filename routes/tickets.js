@@ -7,4 +7,8 @@ router.get('/', (req, res) => tickets.getTickets(req, res));
 
 router.post('/', (req, res) => tickets.createTicket(req, res));
 
+router.delete('/', (req, res) => tickets.deleteTicket(req, res));
+
+router.put('/', (req, res) => tickets.updateTicket(req, res));
+
 module.exports = router;
