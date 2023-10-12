@@ -33,7 +33,7 @@ function getTrainObject(parsedData) {
     const position = changedPosition.Position.WGS84.match(matchCoords).map((t=>parseFloat(t))).reverse()
 
     const trainObject = {
-        trainnumber: changedPosition.Train.AdvertisedTrainNumber,
+        trainnumber: changedPosition.Train.OperationalTrainNumber,
         position: position,
         timestamp: changedPosition.TimeStamp,
         bearing: changedPosition.Bearing,
