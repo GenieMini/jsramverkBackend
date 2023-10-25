@@ -16,6 +16,9 @@ const codes = require('./routes/codes.js');
 const app = express()
 const httpServer = require("http").createServer(app);
 
+let openedTickets = [];
+let editedTickets = [];
+
 app.use(cors());
 app.options('*', cors());
 
@@ -30,6 +33,30 @@ const io = require("socket.io")(httpServer, {
     origin: ['http://localhost:9000', 'http://www.student.bth.se'],
     methods: ["GET", "POST"]
   }
+});
+
+io.on('connection', function (socket) {
+    // console.info("User connected");
+
+    socket.on('ticket open', function (_openedTickets) {
+        if (_openedTickets) {
+            openedTickets = _openedTickets;
+        }
+        
+        io.emit('ticket open', openedTickets);
+    });
+
+    /**
+     * Client emits updated editedTickets.
+     * Server receives this update and emits it back to all listening clients.
+     */
+    socket.on('ticket edit', function (_editedTickets) {
+        if (_editedTickets) {
+            editedTickets = _editedTickets;
+        }
+
+        io.emit('ticket edit', editedTickets);
+    });
 });
 
 const port = process.env.PORT || 1337;

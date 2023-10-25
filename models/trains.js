@@ -94,7 +94,7 @@ async function fetchTrainPositions(io) {
 
     // Configure event source when socket connection is established
     io.on('connection', (socket) => {
-        console.log('a user connected')
+        // console.log('a user connected')
 
         configEventSource(eventSource, socket, trainPositions);
     });
