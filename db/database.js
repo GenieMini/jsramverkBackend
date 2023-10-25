@@ -17,6 +17,18 @@ const database = {
             collection: collection,
             client: client,
         };
+    },
+    authDb: async function authDb() {
+        await client.connect();
+    
+        const db = client.db(dbName);
+        const collection = db.collection('users');
+    
+        return {
+            db: db,
+            collection: collection,
+            client: client,
+        };
     }
 };
 

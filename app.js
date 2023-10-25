@@ -12,6 +12,7 @@ const fetchTrainPositions = require('./models/trains.js')
 const delayed = require('./routes/delayed.js');
 const tickets = require('./routes/tickets.js');
 const codes = require('./routes/codes.js');
+const auth = require('./routes/auth.js');
 
 const app = express()
 const httpServer = require("http").createServer(app);
@@ -26,28 +27,29 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 // Set up Socket.IO for communication between front- and backend
 const io = require("socket.io")(httpServer, {
-  cors: {
-    origin: ['http://localhost:9000', 'http://www.student.bth.se'],
-    methods: ["GET", "POST"]
-  }
+    cors: {
+        origin: ['http://localhost:9000', 'http://www.student.bth.se'],
+        methods: ["GET", "POST", "PUT", "DELETE"]
+    }
 });
 
 const port = process.env.PORT || 1337;
 
 app.get('/', (req, res) => {
-  res.json({
-      data: 'Hello World!'
-  })
+    res.json({
+        data: 'Hello World!'
+    })
 })
 
 // Define routes
 app.use("/delayed", delayed);
 app.use("/tickets", tickets);
 app.use("/codes", codes);
+app.use("/auth", auth);
 
 // Listen for access on port 1337
 const server = httpServer.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`)
 })
 
 fetchTrainPositions(io);
