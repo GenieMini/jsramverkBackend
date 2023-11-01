@@ -13,7 +13,7 @@ const delayed = require('./routes/delayed.js');
 const tickets = require('./routes/tickets.js');
 const codes = require('./routes/codes.js');
 const auth = require('./routes/auth.js');
-
+const jwt = require('jsonwebtoken');
 const app = express()
 const httpServer = require("http").createServer(app);
 
@@ -64,15 +64,39 @@ const port = process.env.PORT || 1337;
 
 app.get('/', (req, res) => {
     res.json({
-        data: 'Hello World!'
+        data: 'Welcome to the train api'
     })
 })
 
 // Define routes
+
+app.use("/auth", auth);
+
+app.use((req, res, next) => checkToken(req, res, next));
+
 app.use("/delayed", delayed);
 app.use("/tickets", tickets);
 app.use("/codes", codes);
-app.use("/auth", auth);
+
+// Asserts token
+function checkToken(req, res, next) {
+    const token = req.headers['x-access-token'];
+
+    jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+        if (err) {
+            return res.status(401).json({
+                errors: {
+                    status: 401,
+                    title: "Bad Token",
+                    detail: "Token is incorrect or missing."
+                }
+            });
+        }
+
+        // Valid token send on the request
+        next();
+    });
+}
 
 // Listen for access on port 1337
 const server = httpServer.listen(port, () => {
