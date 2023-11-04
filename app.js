@@ -58,6 +58,11 @@ io.on('connection', function (socket) {
 
         io.emit('ticket edit', editedTickets);
     });
+
+    // User left site
+    socket.on("disconnect", (reason) => {
+        console.log(reason);
+    });
 });
 
 const port = process.env.PORT || 1337;
